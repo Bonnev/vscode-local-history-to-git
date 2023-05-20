@@ -1,0 +1,27 @@
+{
+  "name": "vscode-local-history-to-git",
+  "version": "0.1.0",
+  "description": "A script to generate commands to transfer vscode's local history files into a git repository",
+  "main": "index.js",
+  "scripts": {
+    "bundle": "ncc build index.js -o dist/ && mv dist/index.js dist/vscode-local-history-to-git.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bonnev/vscode-local-history-to-git.git"
+  },
+  "keywords": [
+    "vscode",
+    "local-history",
+    "git"
+  ],
+  "author": "Bonnev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Bonnev/vscode-local-history-to-git/issues"
+  },
+  "homepage": "https://github.com/Bonnev/vscode-local-history-to-git#readme",
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
+}
