@@ -1,7 +1,7 @@
 const fs = require('fs');
 const moment = require('moment');
 
-const historyDir = "..\\.history"
+const historyDir = ".history"
 
 const allFiles = [];
 
@@ -9,10 +9,10 @@ const addFiles = (dir) => {
 	const files = fs.readdirSync(dir);
 	
 	files.forEach(file => {
-
 		if (fs.lstatSync(dir+'\\'+file).isDirectory()) {
 			addFiles(dir+'\\'+file)
 		} else {
+			//console.log(dir+'\\'+file, '.' + (dir+'\\'+file).replace(/\.history\\(.*)_\d+(\.\w+)?$/, '\\$1$2'));
 			allFiles.push(dir+'\\'+file);
 		}
 	});
@@ -53,7 +53,7 @@ const batches = fileMap.reduce((acc, current) => {
 
 	const timeToCurrent = moment.duration(moment(current.time).subtract(lastBatchTime));
 
-	if (timeToCurrent < moment.duration(2, 'hours')) {
+	if (timeToCurrent < moment.duration(12, 'hours')) {
 		acc[acc.length-1].paths.push(current.path);
 	} else {
 		acc.push({time: current.time, paths: [current.path]});
@@ -63,7 +63,7 @@ const batches = fileMap.reduce((acc, current) => {
 
 const commands = batches.map((batch,ind) => {
 	const paths = batch.paths;
-	const newOldPaths = paths.map(path => ({oldPath: path, newPath: path.replace(/\\\.history\\(.*)_\d+(\.\w+)?$/, '\\$1$2')}));
+	const newOldPaths = paths.map(path => ({oldPath: path, newPath: '.' + path.replace(/\.history\\(.*)_\d+(\.\w+)?$/, '\\$1$2')}));
 	const copyCommands = newOldPaths.map(newOld => `cp "${newOld.oldPath}" "${newOld.newPath}"`);
 	const addCommands = newOldPaths.map(newOld => `git add ${newOld.newPath}`);
 	const dateString = batch.time.format('YYYY-MM-DD[T]HH:mm:SS') // 2005-04-07T22:13:13

@@ -21,6 +21,10 @@
     "url": "https://github.com/Bonnev/vscode-local-history-to-git/issues"
   },
   "homepage": "https://github.com/Bonnev/vscode-local-history-to-git#readme",
+  "engines" : { 
+    "npm" : "8.x",
+    "node" : "16.x"
+  },
   "dependencies": {
     "moment": "^2.29.4"
   }
