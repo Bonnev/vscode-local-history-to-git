@@ -65,7 +65,7 @@ const commands = batches.map((batch,ind) => {
 	const paths = batch.paths;
 	const newOldPaths = paths.map(path => ({oldPath: path, newPath: '.' + path.replace(/\.history\\(.*)_\d+(\.\w+)?$/, '\\$1$2')}));
 	const copyCommands = newOldPaths.map(newOld => `cp "${newOld.oldPath}" "${newOld.newPath}"`);
-	const addCommands = newOldPaths.map(newOld => `git add ${newOld.newPath}`);
+	const addCommands = newOldPaths.map(newOld => `git add "${newOld.newPath}"`);
 	const dateString = batch.time.format('YYYY-MM-DD[T]HH:mm:SS') // 2005-04-07T22:13:13
 	const commitCommand = `GIT_COMMITTER_DATE=${dateString} git commit -m "batch ${ind+1}" --date=${dateString}`;
 
